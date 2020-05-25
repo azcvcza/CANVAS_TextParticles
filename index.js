@@ -75,3 +75,53 @@ var utils={
         return size * H/100;
     }
 }
+
+canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
+W = canvas.width = window.innerWidth;
+H = canvas.Height = window.innerHeight;
+
+gridX = 5;
+gridY = 5;
+
+function shape(x,y,texte){
+    this.x = x;
+    this.y = y;
+    this.size = 120;
+    this.text =texte;
+    this.placement = [];
+    this.vectors = [];
+}
+shape.prototype.getValue = function(){
+    ctx.textAlign = 'center';
+    ctx.font = 'bold ' + this.size + 'px arail';
+    ctx.fillText(this.text, this.x, this.y);
+    var idata = ctx.getImageData(0,0, W,H);
+    var buffer32 = new Uint32Array(idata.data.buffer);
+    for(var y=0;y<H;y+=gridY){
+        for(var x=0; x<W; x+=gridX){
+            if(buffer32[y*W +x]){
+                this.placement.push(new particle(x,y));
+            }
+        }
+    }
+}
+
+colors = [
+    "#f44336",
+    "#e91e63",
+    "#9c27b0",
+    "#673ab7",
+    "#3f51b5",
+    "#2196f3",
+    "#03a9f4",
+    "#00bcd4",
+    "#009688",
+    "#4CAF50",
+    "#8BC34A",
+    "#CDDC39",
+    "#FFEB3B",
+    "#FFC107",
+    "#FF9800",
+    "#FF5722"
+  ];
