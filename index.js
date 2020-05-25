@@ -43,4 +43,35 @@ var utils={
             utils.rangeIntersect(r0.x,r0.x+r0.width,r1.x,r1.x+r1.width) && utils.rangeIntersect(r0.y, r0.y+r0.height, r1.y,r1.y+r1.height)
         )
     },
+    degreeToRads: function(degress){
+        return degress/180 * Math.PI;
+    },
+    radsToDegree: function(radinas){
+        return radinas*180/Math.PI;
+    },
+    randomInt: function(min,max){
+        return min+Math.random() * (max-min+1);
+    },
+    getmiddle: function(p0,p1){
+        var x = p0.x;
+        var x2 = p1.x;
+        var middlex = (x+x2)/2;
+        var y = p0.y;
+        var y2 = p1.y;
+        var middley = (y+y2)/2;
+        var pos = [middlex,middley];
+        return pos
+    },
+    getAngle: function(p0,p1){
+        var deltaX = p1.x - p0.x;
+        var deltaY = p1.y - p0.y;
+        var rad = Math.atan2(deltaY,deltaX);
+        return rad;
+    },
+    inpercentW: function(size){
+        return size * W /100;
+    },
+    inpercentH: function(size){
+        return size * H/100;
+    }
 }
