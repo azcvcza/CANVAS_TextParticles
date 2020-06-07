@@ -153,7 +153,7 @@ colors = [
       this.getHeading = function(){
           return Math.atan2(this.vy,this.vx);
       }
-      this.setHeading = function(){
+      this.setHeading = function(heading){
           var speed = this.getSpeed();
           this.vx = Math.cos(heading)*speed;
           this.vy = Math.sin(heading)*speed;
@@ -209,7 +209,6 @@ colors = [
   resolution = parseFloat(element4.value);
   speed = parseFloat(element5.value);
   radius = parseFloat(element5.value);
-
   var message = new shape(W/2,H/2+50,fieldValue.value);
   message.getValue();
   
