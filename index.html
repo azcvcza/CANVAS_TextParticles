@@ -10,12 +10,23 @@
 </link>
 <style>
   body {
-    display: flex;
+    position:relative;
   }
 
   #interface {
-    display: flex;
+    position:absolute;
+    display:flex;
     flex-direction: column;
+    left:0px;
+    top:0px;
+    bottom: 0px;
+    z-index:1;
+    background: lightgrey;
+  }
+  canvas{
+    background: black;
+    width:100%;
+    height:100%;
   }
 </style>
 
@@ -36,7 +47,7 @@
       Speed:
       <input onchange="changeV()" type="range" id="5" value=".1" max="5" min="0" step="0.01">
       Radius:
-      <input onchange="changeV()" type="range" id="6" value="2" max="20" min="1.8" step="0.1">
+      <input onchange="changeV()" type="range" id="6" value="2" max="20" min="0" step="0.1">
       Resolution:
       <input type="range" id="4" value="5" max="20" min="3" step="1" onchange="change()">
 
@@ -118,8 +129,8 @@
   }
   let canvas = document.getElementById('canvas');
   let ctx = canvas.getContext('2d');
-  let W = canvas.width = 800;
-  let H = canvas.height = 600;
+  let W = canvas.width = window.innerWidth;
+  let H = canvas.height = window.innerHeight;
   let gridX = 5;
   let gridY = 5;
   let colors = [
@@ -158,20 +169,21 @@
   function Shape(x, y, texte) {
     this.x = x;
     this.y = y;
-    this.size = 120;
+    this.size = 150;
     this.text = texte;
     this.placement = [];
     this.vectors = [];
     this.getValue = function () {
       ctx.textAlign = 'center';
-      ctx.font = 'bold' + this.size + 'px arail';
+      ctx.font = 'bold '+ this.size +'px arail';
       ctx.fillText(this.text, this.x, this.y);
       var idata = ctx.getImageData(0, 0, W, H);
       var buffer32 = new Uint32Array(idata.data.buffer);
-
+      console.log('H:', H);
+      console.log('W:', W);
       for (var y = 0; y < H; y += gridY) {
         for (var x = 0; x < W; x += gridX) {
-          if (buffer32[y * W + x]) {
+          if (buffer32[(y * W + x)]) {
             this.placement.push(new particle(x, y));
           }
         }
@@ -253,7 +265,7 @@
     gridX = parseFloat(element4.value);
     gridY = parseFloat(element4.value);
     message.placement = [];
-    message.text = filedvalue.value;
+    message.text = fieldValue.value;
     message.getValue();
   }
   function changeV() {
